@@ -10,5 +10,7 @@ public:
 
 private:
 	sf::RenderWindow _mainWindow;
+
+	enum GameState { Splash, Menu, Playing, Credits, ScoreBoard, Exiting};
 };
 
