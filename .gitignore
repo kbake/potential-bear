@@ -1,0 +1,11 @@
+*.txt
+*.dll
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+Debug/
+images/
+fonts/
+audio/
+Release/
+thirdparty/
