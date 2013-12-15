@@ -40,6 +40,8 @@ Gameplay::Gameplay(void) :
 	_toDraw.push_back(&_timeCover);
 	_toDraw.push_back(&_roundNumberText);
 	_toDraw.push_back(&_messageText);
+
+	srand(time(NULL));
 }
 
 
