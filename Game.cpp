@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Game.h"
 #include "SplashView.h"
+#include "MenuView.h"
 
 
 Game::Game(void) :
@@ -18,6 +19,11 @@ void Game::Start()
 {
 	_mainWindow.create(sf::VideoMode(800, 600), "Just One Second!");
 
+	_outline.setFillColor(sf::Color::Transparent);
+	_outline.setSize(sf::Vector2f(790, 590));
+	_outline.setPosition(5, 5);
+	_outline.setOutlineThickness(5);
+
 	sf::Clock clock;
 	sf::Time elapsed;
 
@@ -25,8 +31,10 @@ void Game::Start()
 	{
 		elapsed = clock.restart();
 
+		_mainWindow.clear();
+		_mainWindow.draw(_outline);
 		Update(elapsed.asSeconds());
-		Render();
+		_mainWindow.display();
 	}
 }
 
@@ -58,34 +66,38 @@ void Game::Update(double deltaTime)
 	case Splash:		// at splash
 		_splash->Update(deltaTime);
 
-		_mainWindow.clear();
 		_splash->Draw(_mainWindow);
-		_mainWindow.display();
 		
 		if (event.type == sf::Event::MouseButtonPressed)
 		{
 			_currentState = Menu;
+			
+			delete _splash;
+			_splash = NULL;
+
+			_menu = new MenuView();
 		}
 
 		break;
 	case Menu:			// at menu
+		_menu->Update(deltaTime);
+
+		_menu->Draw(_mainWindow);
+		_mainWindow.draw(_outline); // because the menu is just an image and I don't feel like resizing it
+
+		if (event.type == sf::Event::MouseButtonPressed)
+		{
+			_currentState = Playing;
+		}
+
 		break;
 	case Playing:		// game's running
 		break;
 	case Paused:		// game paused (will there be a pause??)
 		break;
-	case Credits:		// at credits screen
-		break;
 	case Exiting:		// clean up or go to menu? maybe should have a separate state for shutdown?
 		break;
 	}
-}
-
-void Game::Render()
-{
-	//_mainWindow.clear();
-
-	//_mainWindow.display();
 }
 
 sf::RenderWindow& Game::GetWindow()

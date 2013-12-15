@@ -1,6 +1,7 @@
 #pragma once
 
 class SplashView;
+class MenuView;
 
 class Game
 {
@@ -11,17 +12,18 @@ public:
 	sf::RenderWindow& GetWindow();
 
 	void Start();
-	void Render();
 	void Update(double);
 	bool IsExiting();
 
 private:
 	sf::RenderWindow _mainWindow;
+	sf::RectangleShape _outline;
 
-	enum GameState { Initializing, Splash, Menu, Playing, Paused, Credits, ScoreBoard, Exiting };
+	enum GameState { Initializing, Splash, Menu, Playing, Paused, ScoreBoard, Exiting };
 
 	GameState _currentState;
 
 	SplashView* _splash;
+	MenuView* _menu;
 };
 
