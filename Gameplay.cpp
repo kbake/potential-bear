@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Gameplay.h"
-
+#include <iostream>
 
 Gameplay::Gameplay(void) :
 	_beginRoundTick(0.f),
@@ -32,6 +32,10 @@ Gameplay::Gameplay(void) :
 	_timeCover.setFillColor(sf::Color(0, 0, 0, 200));
 	_timeCover.setSize(sf::Vector2f(800, 600));
 
+	_button.setFillColor(sf::Color::Green);
+	_button.setPosition(100, 100);
+	_button.setRadius(50);
+
 	_toDraw.push_back(&_timeText);
 	_toDraw.push_back(&_timeCover);
 	_toDraw.push_back(&_roundNumberText);
@@ -62,6 +66,7 @@ void Gameplay::Update(double deltaTime)
 		{
 			_beginRoundTick = 0;
 			_ellipsisTick = 0;
+			_inRoundTick = 0;
 
 			_toDraw.erase(_toDraw.begin()+2, _toDraw.end());
 
@@ -72,11 +77,18 @@ void Gameplay::Update(double deltaTime)
 	case InRound:
 		_inRoundTick += deltaTime;
 
+		if (_toDraw.size() < 3)
+		{
+			_toDraw.push_back(&_button);
+		}
+
 		_timeText.setString(std::to_string(_inRoundTick).substr(2, 2));
 
 		if (_inRoundTick >= 1.f)
 		{
 			_failed = true;
+
+			_timeText.setString("00");
 
 			_gameplayState = EndRound;
 		}
@@ -94,6 +106,8 @@ void Gameplay::Update(double deltaTime)
 		if (_endRoundTick >= 2.f)
 		{
 			_endRoundTick = 0.f;
+
+			_messageText.setString("Get ready");
 
 			_gameplayState = BeginRound;
 		}
@@ -113,7 +127,24 @@ void Gameplay::Draw(sf::RenderWindow& rw)
 
 void Gameplay::CheckMouseClick(sf::Vector2i pos)
 {
-	// check if mouse clicked on sprite
+	if (_gameplayState != InRound) return;
+
+	sf::FloatRect buttonBounds = _button.getGlobalBounds();	
+	
+	if (buttonBounds.contains(pos.x, pos.y))
+	{
+		_failed = false;
+
+		_roundNumber++;
+
+		_timeText.setString("00");
+		_messageText.setString("Good stuff!");
+		_roundNumberText.setString("Round " + std::to_string(_roundNumber));
+
+		_toDraw.pop_back();
+
+		_gameplayState = EndRound;
+	}
 }
 
 bool Gameplay::EndGame()

@@ -133,7 +133,7 @@ void Game::Update(double deltaTime)
 		}
 		if (event.type == sf::Event::MouseButtonPressed)
 		{
-			_gameplay->CheckMouseClick(sf::Mouse::getPosition());
+			_gameplay->CheckMouseClick(sf::Mouse::getPosition(_mainWindow));
 		}
 
 		break;

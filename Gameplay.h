@@ -22,6 +22,7 @@ private:
 	sf::Text _goText;
 	sf::Text _timeText;
 	sf::RectangleShape _timeCover;
+	sf::CircleShape _button;
 
 	std::vector<sf::Drawable*> _toDraw;
 
