@@ -57,6 +57,10 @@ void Game::Update(double deltaTime)
 		break;
 	case Splash:		// at splash
 		_splash->Update(deltaTime);
+
+		_mainWindow.clear();
+		_splash->Draw(_mainWindow);
+		_mainWindow.display();
 		
 		if (event.type == sf::Event::MouseButtonPressed)
 		{
@@ -79,9 +83,9 @@ void Game::Update(double deltaTime)
 
 void Game::Render()
 {
-	_mainWindow.clear();
-	_splash->Draw(_mainWindow);
-	_mainWindow.display();
+	//_mainWindow.clear();
+
+	//_mainWindow.display();
 }
 
 sf::RenderWindow& Game::GetWindow()
