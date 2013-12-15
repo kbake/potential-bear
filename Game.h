@@ -1,4 +1,7 @@
 #pragma once
+
+class SplashView;
+
 class Game
 {
 public:
@@ -18,5 +21,7 @@ private:
 	enum GameState { Initializing, Splash, Menu, Playing, Paused, Credits, ScoreBoard, Exiting };
 
 	GameState _currentState;
+
+	SplashView* _splash;
 };
 

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Game.h"
+#include "SplashView.h"
 
 
 Game::Game(void) :
@@ -15,7 +16,7 @@ Game::~Game(void)
 // Set everything up
 void Game::Start()
 {
-	_mainWindow.create(sf::VideoMode(800, 600), "Just a Second!");
+	_mainWindow.create(sf::VideoMode(800, 600), "Just One Second!");
 
 	sf::Clock clock;
 	sf::Time elapsed;
@@ -50,8 +51,13 @@ void Game::Update(double deltaTime)
 	switch (_currentState)
 	{
 	case Initializing:	// first starting
+		_splash = new SplashView();
+		
+		_currentState = Splash;
 		break;
 	case Splash:		// at splash
+		_splash->Update(deltaTime);
+		
 		break;
 	case Menu:			// at menu
 		break;
@@ -69,7 +75,7 @@ void Game::Update(double deltaTime)
 void Game::Render()
 {
 	_mainWindow.clear();
-
+	_splash->Draw(_mainWindow);
 	_mainWindow.display();
 }
 
