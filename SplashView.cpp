@@ -6,11 +6,11 @@ SplashView::SplashView(void) :
 	_alphaTime(0.f),
 	_decreaseAlpha(true)
 {
-	_outline.setSize(sf::Vector2f(780, 580));
-	_outline.setFillColor(sf::Color::Transparent);
-	_outline.setPosition(10, 10);
-	_outline.setOutlineThickness(10.f);
-	_outline.setOutlineColor(sf::Color::White);
+	//_outline.setSize(sf::Vector2f(780, 580));
+	//_outline.setFillColor(sf::Color::Transparent);
+	//_outline.setPosition(10, 10);
+	//_outline.setOutlineThickness(10.f);
+	//_outline.setOutlineColor(sf::Color::White);
 
 	_font.loadFromFile("fonts/arial.ttf");
 
@@ -33,21 +33,6 @@ SplashView::SplashView(void) :
 SplashView::~SplashView(void)
 {
 }
-
-//void SplashView::SetFont(sf::Font& font)
-//{
-//	_font = font;
-//}
-//
-//void SplashView::SetText(std::string str)
-//{
-//	_text.setString(str);
-//}
-//
-//void SplashView::SetTextPosition(sf::Vector2f pos)
-//{
-//	_text.setPosition(pos);
-//}
 
 void SplashView::Update(double deltaTime)
 {
@@ -88,7 +73,7 @@ void SplashView::Update(double deltaTime)
 
 void SplashView::Draw(sf::RenderWindow& rw)
 {
-	rw.draw(_outline);
+	//rw.draw(_outline);
 	rw.draw(_titleText);
 	rw.draw(_messageText);
 	rw.draw(_animateRect);
