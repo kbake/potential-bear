@@ -24,8 +24,9 @@ Gameplay::Gameplay(void) :
 	_messageText.setString("Get ready");
 
 	_timeText.setFont(_font);
-	_timeText.setPosition(100, 100);
-	_timeText.setCharacterSize(80);
+	_timeText.setPosition(170, 70);
+	_timeText.setCharacterSize(100);
+	_timeText.setScale(4, 4);
 	_timeText.setString("00");
 
 	_timeCover.setFillColor(sf::Color(0, 0, 0, 200));
@@ -70,6 +71,8 @@ void Gameplay::Update(double deltaTime)
 		break;
 	case InRound:
 		_inRoundTick += deltaTime;
+
+		_timeText.setString(std::to_string(_inRoundTick).substr(2, 2));
 
 		if (_inRoundTick >= 1.f)
 		{
