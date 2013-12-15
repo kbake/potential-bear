@@ -2,6 +2,7 @@
 
 class SplashView;
 class MenuView;
+class Gameplay;
 
 class Game
 {
@@ -25,5 +26,6 @@ private:
 
 	SplashView* _splash;
 	MenuView* _menu;
+	Gameplay* _gameplay;
 };
 

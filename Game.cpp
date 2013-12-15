@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "SplashView.h"
 #include "MenuView.h"
+#include "Gameplay.h"
 
 
 Game::Game(void) :
@@ -12,6 +13,23 @@ Game::Game(void) :
 
 Game::~Game(void)
 {
+	if (_splash)
+	{
+		delete _splash;
+		_splash = NULL;
+	}
+
+	if (_menu)
+	{
+		delete _menu;
+		_menu = NULL;
+	}
+
+	if (_gameplay)
+	{
+		delete _gameplay;
+		_gameplay = NULL;
+	}
 }
 
 // Set everything up
@@ -32,8 +50,8 @@ void Game::Start()
 		elapsed = clock.restart();
 
 		_mainWindow.clear();
-		_mainWindow.draw(_outline);
 		Update(elapsed.asSeconds());
+		_mainWindow.draw(_outline);
 		_mainWindow.display();
 	}
 }
@@ -87,11 +105,37 @@ void Game::Update(double deltaTime)
 
 		if (event.type == sf::Event::MouseButtonPressed)
 		{
+			_gameplay = new Gameplay();
+
 			_currentState = Playing;
 		}
 
 		break;
 	case Playing:		// game's running
+		_gameplay->Update(deltaTime);
+		_gameplay->Draw(_mainWindow);
+
+		if (_gameplay->EndGame())
+		{
+			delete _gameplay;
+			_gameplay = NULL;
+			_currentState = Menu;
+		}
+		if (event.type == sf::Event::KeyPressed)
+		{
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+			{
+				delete _gameplay;
+				_gameplay = NULL;
+
+				_currentState = Menu;
+			}
+		}
+		if (event.type == sf::Event::MouseButtonPressed)
+		{
+			_gameplay->CheckMouseClick(sf::Mouse::getPosition(_mainWindow));
+		}
+
 		break;
 	case Paused:		// game paused (will there be a pause??)
 		break;
