@@ -5,12 +5,18 @@ public:
 	Game(void);
 	~Game(void);
 
-	void Start();
 	sf::RenderWindow& GetWindow();
+
+	void Start();
+	void Render();
+	void Update();
+	bool IsExiting();
 
 private:
 	sf::RenderWindow _mainWindow;
 
-	enum GameState { Splash, Menu, Playing, Credits, ScoreBoard, Exiting};
+	enum GameState { Initializing, Splash, Menu, Playing, Credits, ScoreBoard, Exiting };
+
+	GameState _currentState;
 };
 
