@@ -37,6 +37,11 @@ void Game::Start()
 {
 	_mainWindow.create(sf::VideoMode(800, 600), "Just One Second!");
 
+	_gameMusic.openFromFile("audio/music/horrible.wav");
+	_gameMusic.setLoop(true);	// so sorry
+	_gameMusic.setVolume(50);
+	_gameMusic.play();
+
 	_outline.setFillColor(sf::Color::Transparent);
 	_outline.setSize(sf::Vector2f(790, 590));
 	_outline.setPosition(5, 5);

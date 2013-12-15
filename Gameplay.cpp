@@ -20,6 +20,15 @@ Gameplay::Gameplay(void) :
 
 Gameplay::~Gameplay(void)
 {
+	while (_toDraw.size() > 0)
+	{
+		_toDraw.pop_back();
+	}
+
+	while (_phraseSoundBuffers.size() > 0)
+	{
+		_phraseSoundBuffers.pop_back();
+	}
 }
 
 void Gameplay::Init()

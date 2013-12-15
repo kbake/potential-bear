@@ -17,6 +17,7 @@ public:
 	bool IsExiting();
 
 private:
+	sf::Music _gameMusic;
 	sf::RenderWindow _mainWindow;
 	sf::RectangleShape _outline;
 
