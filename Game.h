@@ -9,13 +9,13 @@ public:
 
 	void Start();
 	void Render();
-	void Update();
+	void Update(double);
 	bool IsExiting();
 
 private:
 	sf::RenderWindow _mainWindow;
 
-	enum GameState { Initializing, Splash, Menu, Playing, Credits, ScoreBoard, Exiting };
+	enum GameState { Initializing, Splash, Menu, Playing, Paused, Credits, ScoreBoard, Exiting };
 
 	GameState _currentState;
 };
