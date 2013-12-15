@@ -7,9 +7,21 @@ Gameplay::Gameplay(void) :
 	_ellipsisTick(0.f),
 	_inRoundTick(0.f),
 	_endRoundTick(0.f),
-	_roundNumber(0),
+	_roundNumber(1),
 	_gameplayState(BeginRound),
 	_failed(false)
+{
+	srand(time(NULL));
+
+	Init();
+}
+
+
+Gameplay::~Gameplay(void)
+{
+}
+
+void Gameplay::Init()
 {
 	_font.loadFromFile("fonts/arial.ttf");
 
@@ -32,21 +44,12 @@ Gameplay::Gameplay(void) :
 	_timeCover.setFillColor(sf::Color(0, 0, 0, 200));
 	_timeCover.setSize(sf::Vector2f(800, 600));
 
-	_button.setFillColor(sf::Color::Green);
-	_button.setPosition(100, 100);
 	_button.setRadius(50);
 
 	_toDraw.push_back(&_timeText);
 	_toDraw.push_back(&_timeCover);
 	_toDraw.push_back(&_roundNumberText);
 	_toDraw.push_back(&_messageText);
-
-	srand(time(NULL));
-}
-
-
-Gameplay::~Gameplay(void)
-{
 }
 
 void Gameplay::Update(double deltaTime)
@@ -71,6 +74,14 @@ void Gameplay::Update(double deltaTime)
 			_inRoundTick = 0;
 
 			_toDraw.erase(_toDraw.begin()+2, _toDraw.end());
+
+			if (_roundNumber % 10 == 0)
+			{
+				_button.setRadius(_button.getRadius() - (_button.getRadius() * .1));
+			}
+
+			_button.setFillColor(sf::Color(rand() % 255, rand() % 255, rand() % 255));
+			_button.setPosition(rand() % (800 - (int)_button.getRadius() * 2), rand() % (600 - (int)_button.getRadius() * 2));
 
 			_gameplayState = InRound;
 		}

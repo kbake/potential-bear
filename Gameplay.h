@@ -8,6 +8,7 @@ public:
 	bool EndGame();
 	void CheckMouseClick(sf::Vector2i);
 
+	void Init();
 	void Update(double);
 	void Draw(sf::RenderWindow&);
 
