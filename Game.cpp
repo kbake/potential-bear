@@ -58,6 +58,11 @@ void Game::Update(double deltaTime)
 	case Splash:		// at splash
 		_splash->Update(deltaTime);
 		
+		if (event.type == sf::Event::MouseButtonPressed)
+		{
+			_currentState = Menu;
+		}
+
 		break;
 	case Menu:			// at menu
 		break;

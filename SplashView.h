@@ -19,5 +19,9 @@ private:
 	sf::Text _titleText;
 	sf::Text _messageText;
 	sf::Font _font;
+
+	double _totalTimeElapsed;
+	float _alphaTime;
+	bool _decreaseAlpha;
 };
 
