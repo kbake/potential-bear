@@ -6,7 +6,7 @@ public:
 	~Gameplay(void);
 
 	bool EndGame();
-	void SetEvent(sf::Event&);
+	void CheckMouseClick(sf::Vector2i);
 
 	void Update(double);
 	void Draw(sf::RenderWindow&);
@@ -16,20 +16,20 @@ private:
 
 	GameplayState _gameplayState;
 
-	sf::Event _event;
 	sf::Font _font;
 	sf::Text _roundNumberText;
 	sf::Text _messageText;
 	sf::Text _goText;
 	sf::Text _timeText;
+	sf::RectangleShape _timeCover;
 
-	std::vector<sf::Text*> _textToDraw;
+	std::vector<sf::Drawable*> _toDraw;
 
 	float _beginRoundTick;
+	float _ellipsisTick;
 	float _inRoundTick;	
 	float _endRoundTick;
 	unsigned int _roundNumber;
 	bool _failed;
-	bool _quit;
 };
 

@@ -4,12 +4,12 @@
 
 Gameplay::Gameplay(void) :
 	_beginRoundTick(0.f),
+	_ellipsisTick(0.f),
 	_inRoundTick(0.f),
 	_endRoundTick(0.f),
 	_roundNumber(0),
 	_gameplayState(BeginRound),
-	_failed(false),
-	_quit(false)
+	_failed(false)
 {
 	_font.loadFromFile("fonts/arial.ttf");
 
@@ -26,10 +26,15 @@ Gameplay::Gameplay(void) :
 	_timeText.setFont(_font);
 	_timeText.setPosition(100, 100);
 	_timeText.setCharacterSize(80);
+	_timeText.setString("00");
 
-	_textToDraw.push_back(&_timeText);
-	_textToDraw.push_back(&_roundNumberText);
-	_textToDraw.push_back(&_messageText);
+	_timeCover.setFillColor(sf::Color(0, 0, 0, 200));
+	_timeCover.setSize(sf::Vector2f(800, 600));
+
+	_toDraw.push_back(&_timeText);
+	_toDraw.push_back(&_timeCover);
+	_toDraw.push_back(&_roundNumberText);
+	_toDraw.push_back(&_messageText);
 }
 
 
@@ -43,12 +48,21 @@ void Gameplay::Update(double deltaTime)
 	{
 	case BeginRound:
 		_beginRoundTick += deltaTime;
+		_ellipsisTick += deltaTime;
+
+		if (_ellipsisTick > .5)
+		{
+			_ellipsisTick = 0;
+
+			_messageText.setString(_messageText.getString() + ".");
+		}
 
 		if (_beginRoundTick >= 2.f)
 		{
 			_beginRoundTick = 0;
+			_ellipsisTick = 0;
 
-			_textToDraw.erase(_textToDraw.begin()+1, _textToDraw.end());
+			_toDraw.erase(_toDraw.begin()+2, _toDraw.end());
 
 			_gameplayState = InRound;
 		}
@@ -56,14 +70,6 @@ void Gameplay::Update(double deltaTime)
 		break;
 	case InRound:
 		_inRoundTick += deltaTime;
-
-		if (_event.type == sf::Event::KeyPressed)
-		{
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-			{
-				_quit = true;
-			}
-		}
 
 		if (_inRoundTick >= 1.f)
 		{
@@ -76,10 +82,10 @@ void Gameplay::Update(double deltaTime)
 	case EndRound:
 		_endRoundTick += deltaTime;
 
-		if (_textToDraw.size() < 2)
+		if (_toDraw.size() < 3)
 		{
-			_textToDraw.push_back(&_roundNumberText);
-			_textToDraw.push_back(&_messageText);
+			_toDraw.push_back(&_roundNumberText);
+			_toDraw.push_back(&_messageText);
 		}
 
 		if (_endRoundTick >= 2.f)
@@ -95,21 +101,21 @@ void Gameplay::Update(double deltaTime)
 
 void Gameplay::Draw(sf::RenderWindow& rw)
 {
-	std::vector<sf::Text*>::iterator end = _textToDraw.end();
-	for (std::vector<sf::Text*>::iterator it = _textToDraw.begin(); it != end; it++)
+	std::vector<sf::Drawable*>::iterator end = _toDraw.end();
+	for (std::vector<sf::Drawable*>::iterator it = _toDraw.begin(); it != end; it++)
 	{
 		rw.draw(**(it));
 	}
 }
 
-void Gameplay::SetEvent(sf::Event& event)
+void Gameplay::CheckMouseClick(sf::Vector2i pos)
 {
-	_event = event;
+	// check if mouse clicked on sprite
 }
 
 bool Gameplay::EndGame()
 {
-	if (_failed || _quit)
+	if (_failed)
 	{
 		return true;
 	}
