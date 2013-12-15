@@ -5,7 +5,7 @@ public:
 	View(void);
 	~View(void);
 
-	void Update(double);
-	void Draw(sf::RenderWindow&);
+	virtual void Update(double) =0;
+	virtual void Draw(sf::RenderWindow&) =0;
 };
 
