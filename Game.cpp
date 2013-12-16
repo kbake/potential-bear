@@ -35,11 +35,11 @@ Game::~Game(void)
 // Set everything up
 void Game::Start()
 {
-	_mainWindow.create(sf::VideoMode(800, 600), "Just One Second!");
+	_mainWindow.create(sf::VideoMode(800, 600), "Just. One. Second.");
 
 	_gameMusic.openFromFile("audio/music/horrible.wav");
 	_gameMusic.setLoop(true);	// so sorry
-	_gameMusic.setVolume(50);
+	_gameMusic.setVolume(15);
 	_gameMusic.play();
 
 	_outline.setFillColor(sf::Color::Transparent);
@@ -91,14 +91,17 @@ void Game::Update(double deltaTime)
 
 		_splash->Draw(_mainWindow);
 		
-		if (event.type == sf::Event::MouseButtonPressed)
+		if (event.type == sf::Event::KeyPressed)
 		{
-			_currentState = Menu;
-			
-			delete _splash;
-			_splash = NULL;
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+			{
+				_currentState = Menu;
 
-			_menu = new MenuView();
+				delete _splash;
+				_splash = NULL;
+
+				_menu = new MenuView();
+			}
 		}
 
 		break;
@@ -108,11 +111,14 @@ void Game::Update(double deltaTime)
 		_menu->Draw(_mainWindow);
 		_mainWindow.draw(_outline); // because the menu is just an image and I don't feel like resizing it
 
-		if (event.type == sf::Event::MouseButtonPressed)
+		if (event.type == sf::Event::KeyPressed)
 		{
-			_gameplay = new Gameplay();
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+			{
+				_gameplay = new Gameplay();
 
-			_currentState = Playing;
+				_currentState = Playing;
+			}
 		}
 
 		break;

@@ -58,6 +58,7 @@ void Gameplay::Init()
 
 	_getReadyBuffer.loadFromFile("audio/fx/getready.wav");
 	_getReadySound.setBuffer(_getReadyBuffer);
+	_getReadySound.play();
 
 	_goBuffer.loadFromFile("audio/fx/go.wav");
 	_goSound.setBuffer(_goBuffer);
