@@ -34,7 +34,7 @@ void SplashView::Update(double deltaTime)
 
 	if (_totalTimeElapsed > 2.0)
 	{
-		_alphaTime += deltaTime;
+		_alphaTime += (float)deltaTime;
 
 		if (_alphaTime > .01)
 		{
