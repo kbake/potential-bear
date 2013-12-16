@@ -13,7 +13,7 @@ Gameplay::Gameplay(void) :
 	_showGo(false),
 	_endGame(false)
 {
-	srand(time(NULL));
+	srand((unsigned)time(NULL));
 
 	Init();
 }
@@ -97,8 +97,8 @@ void Gameplay::Update(double deltaTime)
 	switch(_gameplayState)
 	{
 	case BeginRound:
-		_beginRoundTick += deltaTime;
-		_ellipsisTick += deltaTime;
+		_beginRoundTick += (float)deltaTime;
+		_ellipsisTick += (float)deltaTime;
 
 		if (_ellipsisTick > .5)
 		{
@@ -126,18 +126,18 @@ void Gameplay::Update(double deltaTime)
 
 			if (_roundNumber % 4 == 0)
 			{
-				_button.setRadius(_button.getRadius() - (_button.getRadius() * .1));
+				_button.setRadius((float)(_button.getRadius() - (_button.getRadius() * .1)));
 			}
 
 			_button.setFillColor(sf::Color(rand() % 255, rand() % 255, rand() % 255));
-			_button.setPosition(rand() % (800 - (int)_button.getRadius() * 2), rand() % (600 - (int)_button.getRadius() * 2));
+			_button.setPosition((float)(rand() % (800 - (int)_button.getRadius() * 2)), (float)(rand() % (600 - (int)_button.getRadius() * 2)));
 
 			_gameplayState = InRound;
 		}
 
 		break;
 	case InRound:
-		_inRoundTick += deltaTime;
+		_inRoundTick += (float)deltaTime;
 
 		if (_toDraw.size() < 3)
 		{
@@ -157,7 +157,7 @@ void Gameplay::Update(double deltaTime)
 
 		break;
 	case EndRound:
-		_endRoundTick += deltaTime;
+		_endRoundTick += (float)deltaTime;
 
 		if (_toDraw.size() < 3)
 		{
@@ -167,6 +167,8 @@ void Gameplay::Update(double deltaTime)
 			if (_failed)
 			{
 				_messageText.setString("Too slow");
+
+				_button.setRadius(50);
 
 				_roundNumber = 1;
 			}
@@ -204,7 +206,7 @@ void Gameplay::CheckMouseClick(sf::Vector2i pos)
 
 	sf::FloatRect buttonBounds = _button.getGlobalBounds();	
 	
-	if (buttonBounds.contains(pos.x, pos.y))
+	if (buttonBounds.contains((float)pos.x, (float)pos.y))
 	{
 		_buttonHitSound.play();
 
