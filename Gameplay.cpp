@@ -10,7 +10,8 @@ Gameplay::Gameplay(void) :
 	_roundNumber(1),
 	_gameplayState(BeginRound),
 	_failed(false),
-	_showGo(false)
+	_showGo(false),
+	_endGame(false)
 {
 	srand(time(NULL));
 
@@ -123,7 +124,7 @@ void Gameplay::Update(double deltaTime)
 
 			_toDraw.erase(_toDraw.begin()+2, _toDraw.end());
 
-			if (_roundNumber % 10 == 0)
+			if (_roundNumber % 4 == 0)
 			{
 				_button.setRadius(_button.getRadius() - (_button.getRadius() * .1));
 			}
@@ -149,7 +150,7 @@ void Gameplay::Update(double deltaTime)
 		{
 			_failed = true;
 
-			_timeText.setString("00");
+			_toDraw.pop_back();
 
 			_gameplayState = EndRound;
 		}
@@ -162,6 +163,13 @@ void Gameplay::Update(double deltaTime)
 		{
 			_toDraw.push_back(&_roundNumberText);
 			_toDraw.push_back(&_messageText);
+
+			if (_failed)
+			{
+				_messageText.setString("Too slow");
+
+				_roundNumber = 1;
+			}
 		}
 
 		if (_endRoundTick >= 2.f)
@@ -170,6 +178,7 @@ void Gameplay::Update(double deltaTime)
 
 			_timeText.setString("00");
 			_messageText.setString("Get ready");
+			_roundNumberText.setString("Round " + std::to_string(_roundNumber));
 
 			_getReadySound.play();
 
@@ -219,7 +228,7 @@ void Gameplay::CheckMouseClick(sf::Vector2i pos)
 
 bool Gameplay::EndGame()
 {
-	if (_failed)
+	if (_endGame)
 	{
 		return true;
 	}

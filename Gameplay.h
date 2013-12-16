@@ -29,6 +29,7 @@ private:
 	sf::Text _messageText;
 	sf::Text _goText;
 	sf::Text _timeText;
+	sf::Text _bestTimeText;
 	sf::RectangleShape _timeCover;
 	sf::CircleShape _button;
 
@@ -40,8 +41,10 @@ private:
 	float _ellipsisTick;
 	float _inRoundTick;	
 	float _endRoundTick;
+	int _bestTime;
 	unsigned int _roundNumber;
 	bool _failed;
 	bool _showGo;
+	bool _endGame;
 };
 
