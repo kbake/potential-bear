@@ -21,15 +21,21 @@ Gameplay::Gameplay(void) :
 
 Gameplay::~Gameplay(void)
 {
-	while (_toDraw.size() > 0)
+	std::vector<sf::Drawable*>::iterator toDrawEnd = _toDraw.end();
+	for (std::vector<sf::Drawable*>::iterator it = _toDraw.begin(); it != toDrawEnd; it++)
 	{
-		_toDraw.pop_back();
+		delete *it;
+		*it = NULL;
 	}
+	_toDraw.clear();
 
-	while (_phraseSoundBuffers.size() > 0)
+	std::vector<sf::SoundBuffer*>::iterator phraseSoundBuffersEnd = _phraseSoundBuffers.end();
+	for (std::vector<sf::SoundBuffer*>::iterator it = _phraseSoundBuffers.begin(); it != phraseSoundBuffersEnd; it++)
 	{
-		_phraseSoundBuffers.pop_back();
+		delete *it;
+		*it = NULL;
 	}
+	_phraseSoundBuffers.clear();
 }
 
 void Gameplay::Init()
@@ -196,7 +202,7 @@ void Gameplay::Draw(sf::RenderWindow& rw)
 	std::vector<sf::Drawable*>::iterator end = _toDraw.end();
 	for (std::vector<sf::Drawable*>::iterator it = _toDraw.begin(); it != end; it++)
 	{
-		rw.draw(**(it));
+		rw.draw(**it);
 	}
 }
 

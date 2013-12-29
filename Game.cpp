@@ -6,7 +6,7 @@
 
 
 Game::Game(void) :
-	_currentState(GameState::Initializing)
+	_currentState(Initializing)
 {
 }
 
@@ -162,7 +162,7 @@ sf::RenderWindow& Game::GetWindow()
 
 bool Game::IsExiting()
 {
-	if (_currentState == GameState::Exiting)
+	if (_currentState == Exiting)
 	{
 		return true;
 	}
